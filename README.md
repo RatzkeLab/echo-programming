@@ -28,12 +28,17 @@ Generate CSV files for Echo liquid handling systems to transfer barcoded PCR pri
 
 **Usage:**
 ```bash
-# Generate a full 384-well plate transfer from 96-well source
-python echo_transfer.py --num-primers 384 --source-format 96 --dest-format 384 --volume 100 --output primer_transfer.csv
+# Generate a 96-well plate transfer from 96-well source
+python echo_transfer.py --num-primers 96 --source-format 96 --dest-format 384 --volume 100 --output primer_transfer.csv
 
-# Transfer 96 primers
+# Generate a full 384-well plate transfer (requires 384-well source)
+python echo_transfer.py --num-primers 384 --source-format 384 --dest-format 384 --volume 100 --output primer_transfer.csv
+
+# Transfer 96 primers to 96-well destination
 python echo_transfer.py -n 96 -s 96 -d 96 -v 50 -o transfer_96.csv
 ```
+
+**Note:** The number of primers cannot exceed the capacity of the source plate (96 for 96-well, 384 for 384-well).
 
 **Arguments:**
 - `--num-primers, -n`: Number of primers to transfer (default: 384)
@@ -126,7 +131,11 @@ B,BC13,BC14,BC15,BC16,...
 
 1. **Generate Echo transfer CSV:**
 ```bash
-python echo_transfer.py -n 384 -v 100 -o primer_transfer.csv
+# For 96 primers from 96-well source
+python echo_transfer.py -n 96 -s 96 -d 384 -v 100 -o primer_transfer.csv
+
+# For full 384-well plate (requires 384-well source)
+python echo_transfer.py -n 384 -s 384 -d 384 -v 100 -o primer_transfer.csv
 ```
 
 2. **Prepare barcode CSV** with well positions and sequences (see `example_barcodes.csv`)
